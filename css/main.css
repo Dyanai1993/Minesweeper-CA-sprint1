@@ -1,0 +1,39 @@
+body {
+    background-color: rgb(9, 160, 248);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+.level {
+   height: 30px;
+   width: 60px;
+   cursor: pointer;
+   background-color: rgb(7, 245, 86) ;
+}
+
+.board{
+    color: wheat
+    
+}
+table {
+    margin: auto;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    border: 1px solid white;
+    background-color: rgb(240, 172, 90);
+}
+
+.cell img {
+    width: 25px;
+    height: auto;
+}
+
+.revile {
+    background-color: lightslategrey;
+}
+
+
+
