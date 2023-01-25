@@ -10,13 +10,14 @@ const FLAG_IMG = '<img src="img/flag.png">';
 var gBoard = buildBoard(4);
 var gFirstClick = true;
 var gMines = 30;
+var gTime;
 
 var gLevel = {
   size: 4,
   mines: 2,
 };
 var gGame = {
-  isOn: false,
+  isOn: true,
   shownCount: 0,
   markedCount: 0,
   secPassed: 0,
@@ -45,8 +46,10 @@ function onLevelClicked(btn) {
 
 function onInit() {
   gBoard = buildBoard();
+  console.log(gBoard);
   renderBoard(gBoard);
   onCallAddMine(gMines);
+  closeModal()
 }
 
 function buildBoard() {
@@ -72,7 +75,7 @@ function buildBoard() {
   //   board[3][1].isMine = true;
   //   board[3][1].gameElement = MINE;
 
-//   console.table(board);
+  //   console.log(board)
   return board;
 }
 
@@ -140,31 +143,32 @@ function onCountNegsMine(negs) {
 }
 
 function onCellClicked(elCell, i, j) {
-  // if (gFirstClick) setFirstClick(i, j);
+  if (gFirstClick) setFirstClick(i, j);
   if (gBoard[i][j].type === SHOW) return;
   if (gBoard[i][j].gameElement === 0) expandShown(gBoard, i, j);
   if (gBoard[i][j].flag) return;
   else {
-    handleEmptyCell(i,j)
+    handleEmptyCell(i, j);
     if (gBoard[i][j].isMine === true) {
-        gFlagCount--
+      gFlagCount--;
       // gIcon = SAD;
-    //   gameOver(true);
+        gameOver(true);
+        
     }
     // gameOver(isVictory());		//check if game is over
   }
-  renderMinesCount()
+  renderMinesCount();
   renderBoard(gBoard);
 }
 
-function handleEmptyCell(i,j) {
-    gBoard[i][j].type = SHOW;
-    gGame.shownCount++;
-    console.log(gGame.shownCount);
-    onCountNegsMine(onFindNegs(i, j, gBoard));
-    gBoard[i][j].minesAround = onCountNegsMine(onFindNegs(i, j, gBoard));
-    console.log(gBoard[i][j].minesAround);
-    gBoard[i][j].gameElement = onCountNegsMine(onFindNegs(i, j, gBoard));
+function handleEmptyCell(i, j) {
+  gBoard[i][j].type = SHOW;
+  gGame.shownCount++;
+  console.log(gGame.shownCount);
+  onCountNegsMine(onFindNegs(i, j, gBoard));
+  gBoard[i][j].minesAround = onCountNegsMine(onFindNegs(i, j, gBoard));
+//   console.log(gBoard[i][j].minesAround);
+  gBoard[i][j].gameElement = onCountNegsMine(onFindNegs(i, j, gBoard));
 }
 
 function onCellMarked(elCell, cellI, cellJ, event) {
@@ -188,8 +192,11 @@ function onCellMarked(elCell, cellI, cellJ, event) {
     }
   }
 }
-
-
+function setFirstClick(i, j) {
+	onCallAddMine(gMines);
+	// gTime = setInterval(startTime,1000);
+	gFirstClick = false;
+}
 
 function renderMinesCount() {
   var strHTML = "";
@@ -226,7 +233,7 @@ function getEmptyPos() {
     for (var j = 0; j < gBoard[0].length; j++) {
       if (!gBoard[i][j].gameElement) {
         emptyPoss.push({ i, j });
-        console.log(emptyPoss);
+        // console.log(emptyPoss);
       }
     }
   }
@@ -246,25 +253,46 @@ function getClassName(location) {
 }
 
 
-
-
-
-function onFindEmptNegs(cellI, cellJ, board) {
-    var negs = [];
-    for (var i = cellI - 1; i <= cellI + 1; i++) {
-      if (i < 0 || i >= board.length) continue;
-      for (var j = cellJ - 1; j <= cellJ + 1; j++) {
-        if (j < 0 || j >= board[i].length) continue;
-        if (i === cellI && j === cellJ) continue;
-  
-        if (board[i][j].gameElement) negs.push(board[i][j]);
-      }
-    }
-    return negs;
-  }
-
-//   }
-
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+function isVictory() {
+  for (var i = 0; i < gBoard.length; i++) {
+    for (var j = 0; j < gBoard[0].length; j++) {
+      var cell = gBoard[i][j];
+      if (cell.type === HIDE && cell.mine === false) return false;
+      if (cell.mine === true && cell.flag === false) return false;
+    }
+  }
+//  
+  return true;
+}
+
+function gameOver(isVictory) {
+  if (isVictory) {
+    for (var i = 0; i < gBoard.length; i++) {
+      for (var j = 0; j < gBoard[0].length; j++) {
+        if (gBoard[i][j].isMine === true) gBoard[i][j].type = SHOW;
+      }
+    }
+    gGame.isOn = false
+    var msg = (gGame.isVictory) ? 'You Win!' : 'Game Over'
+    // openModal(msg)
+   
+  }
+}
+
+function openModal(msg) {
+    const elModal = document.querySelector('.modal')
+    const elSpan = elModal.querySelector('.msg')
+    elSpan.innerText = msg
+    elModal.style.display = 'block'
+    openModal(msg)
+}
+
+function closeModal() {
+    const elModal = document.querySelector('.modal')
+    elModal.style.display = 'none'
+}
+

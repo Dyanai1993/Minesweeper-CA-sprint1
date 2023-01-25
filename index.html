@@ -10,17 +10,23 @@
   <body oncontextmenu="return false;">
     <h1>Lets play Minesweeper!</h1>
     <div class="mines-container"></div>
-    <div class="clock"></div>
+    <div class="clock-container"></div>
 
     <table >
         
         <p class="negs-count"> <span></span></p>
+        <div class="start"></div>
         <div>Select Level:</div>
         <button onclick="onLevelClicked(this)" class="level">Easy</button>
         <button onclick="onLevelClicked(this)" class="level">Medium</button>
         <button onclick="onLevelClicked(this)" class="level">Hard</button>
         <tbody class="board"></tbody>
     </table>
+
+    <div class="modal">
+        <h3 class="msg"></h3>
+        <button class="restart-btn" onclick="init()">Play Again</button>
+    </div>
 
 
     <script src="js/main.js"></script>
