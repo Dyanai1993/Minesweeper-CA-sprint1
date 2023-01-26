@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/main.css" />
     <title>Mine Sweeper</title>
   </head>
-  <body oncontextmenu="return false;">
+  <body onload="onInit()" oncontextmenu="return false;">
     <h1>Lets play Minesweeper!</h1>
     <div class="mines-container"></div>
     <div class="clock-container"></div>
@@ -20,12 +20,16 @@
         <button onclick="onLevelClicked(this)" class="level">Easy</button>
         <button onclick="onLevelClicked(this)" class="level">Medium</button>
         <button onclick="onLevelClicked(this)" class="level">Hard</button>
+        <div>
+           
+            <p class="timer"></span>0:000<span>s</span>
+        </div>
         <tbody class="board"></tbody>
     </table>
 
     <div class="modal">
         <h3 class="msg"></h3>
-        <button class="restart-btn" onclick="init()">Play Again</button>
+        <button class="restart-btn" onclick="onInit()">Play Again</button>
     </div>
 
 
@@ -33,4 +37,8 @@
     <script src="js/util.js"></script>
     
   </body>
+  <footer>
+    <p>By:Dor Yanai CoffeRights 2023</p>
+  </footer>
+
 </html>

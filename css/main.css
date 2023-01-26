@@ -3,6 +3,7 @@ body {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    background-size: cover;
 }
 .level {
    height: 30px;
@@ -31,6 +32,13 @@ table {
     height: auto;
 }
 
+footer {
+    position: absolute;
+    bottom: 2px;
+    right: calc((50% - 120px));
+    
+}
+
 .revile {
     background-color: lightslategrey;
 }
@@ -45,7 +53,7 @@ table {
     font-size: 32px;
     
     position: absolute;
-    top: 200px;
+    top: 500px;
     left: calc(50% - 150px);
     
   }
@@ -63,6 +71,22 @@ table {
     margin: auto;
     
   }
+
+  .lives {
+    position: relative;
+}
+
+.lives p {
+    margin: 5px;
+    display: inline-block;
+    color: red;
+    font-size: 30px;
+}
+
+.lost-live {
+    opacity: 0;
+    transition: 1s;
+}
 
 
 
